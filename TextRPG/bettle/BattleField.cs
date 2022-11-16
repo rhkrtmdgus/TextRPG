@@ -181,7 +181,6 @@ namespace TextRPG.bettle
                 {
                     Console.WriteLine("------- 시스템 -------\n");
                     Console.WriteLine("플레이어 체력이 부족합니다.");
-                    Console.WriteLine("곧 마을로 복귀합니다...");
                     Thread.Sleep(3000);
                 }
 
