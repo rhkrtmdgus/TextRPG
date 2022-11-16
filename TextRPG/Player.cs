@@ -193,7 +193,7 @@ namespace TextRPG
             //무기 공격력 빼기 방어구도 추가예정
             this.at -= this.wapAt;
             this.br -= this.gabBr;
-            string textValue = $"{this.lv}!{this.at}!{this.br}!{this.gold}!{this.exp}!{this.maxExp}!{this.hp}!{this.mp}!{this.dex}!{this.wap}!{this.gab}!{this.pet}!{this.WapAt}!{this.gabBr}";
+            string textValue = $"{this.lv}!{this.at}!{this.br}!{this.gold}!{this.exp}!{this.maxExp}!{this.hp}!{this.mp}!{this.dex}!{this.wap}!{this.gab}!{this.pet}!{this.WapAt}!{this.GabBr}";
         
             System.IO.File.WriteAllText(savePath, textValue, Encoding.UTF8);
             Console.Clear();
@@ -201,6 +201,7 @@ namespace TextRPG
             Thread.Sleep(1500);
             //무기 공격력 다시 증가
             this.at += this.wapAt;
+            this.br += this.gabBr;
         }
 
         public void LevelUp(int lv)

@@ -53,6 +53,12 @@ namespace TextRPG.bettle
 
         public void Battle(Player play, BattleField bf, Thread thread)
         {
+            if(play.Hp <= 20) //체력보충
+            {
+                Console.WriteLine("체력이 부족합니다. 보충하세요");
+                Thread.Sleep(1000);
+                return;
+            }
             this.EndResult = this.EndMae;
             Random random = new Random();
             Console.Clear();
@@ -74,12 +80,17 @@ namespace TextRPG.bettle
             this.threadStatus = 1;  //스레드 동작 초기화 
             while (true)
             {
+                
 
-                if(thread.ThreadState.ToString() == "Unstarted")
+                if (thread.ThreadState.ToString() == "Unstarted")
                 {
                     thread.Start();
                     thread.Interrupt();
                 }
+
+                
+
+
                 Console.Clear();
                 Console.WriteLine("---------------------------");
                 Console.WriteLine("†       고블린 초원     †");
@@ -102,6 +113,13 @@ namespace TextRPG.bettle
                         bf.Status = 1;
                         break;
                     }
+
+                    if (play.Hp <= 20)
+                    {
+                        Console.WriteLine("마을 귀환 : p");
+                        thread.Join();
+                        break;
+                    }
                 }
 
             }
@@ -117,14 +135,15 @@ namespace TextRPG.bettle
             Console.WriteLine("†       고블린 초원     †");
             Console.WriteLine($"---------------------------                   {this.EndResult}\n");
             Console.WriteLine("몬스터 출현!!!!");
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             while (true)
             {
                 
                 Console.Clear();
                 if(this.status == 0)
                 {
-                    Console.WriteLine("잠시 후 마을로 귀환합니다. ");
+                    Console.WriteLine("\n\n잠시 후 마을로 귀환합니다. ");
+                    Thread.Sleep(2000);
                     break;
                 }
                     Console.WriteLine("---------------------------");
@@ -162,7 +181,7 @@ namespace TextRPG.bettle
                 else
                 {
                     result = play.Br - monster.at;
-                    result = result <= 0 ? -result : result;
+                    result = result <= 0 ? -result : 1;
                     play.Hp -= result;
                     Console.Clear();
                     Console.WriteLine("---------------------------");
@@ -182,6 +201,8 @@ namespace TextRPG.bettle
                     Console.WriteLine("------- 시스템 -------\n");
                     Console.WriteLine("플레이어 체력이 부족합니다.");
                     Thread.Sleep(3000);
+                    break;
+
                 }
 
 
