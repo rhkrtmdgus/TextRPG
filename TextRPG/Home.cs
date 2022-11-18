@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,17 +18,19 @@ namespace TextRPG
 
             
             bool rs = true;
-
-            while(rs) { 
+            
+            while(rs) {
             res:
+                int sumstr = play.At + play.WapAt; 
+                int sumdef = play.Br + play.GabBr; 
             Console.Clear();
             Console.WriteLine("------플레이어 정보------\n");
             Console.WriteLine("  레  벨 : " + play.Lv);
-            Console.WriteLine("  공격력 : " + play.At + $" ({play.WapAt})");
-            Console.WriteLine("  방어력 : " + play.Br + $" ({play.GabBr})");
-            Console.WriteLine("  체  력 : " + play.Hp);
-            Console.WriteLine("  마  나 : " + play.Mp);
-            Console.WriteLine("  경험치 : " + play.Exp +"/"+play.MaxExp+"\n");
+            Console.WriteLine("  공격력 : " + sumstr + $" ({play.WapAt})");
+            Console.WriteLine("  방어력 : " + sumdef + $" ({play.GabBr})");
+            Console.WriteLine("  체  력 : " + play.Hp + "/"+play.MaxHp);
+            Console.WriteLine("  마  나 : " + play.Mp + "/" + play.MaxMp);
+                Console.WriteLine("  경험치 : " + play.Exp +"/"+play.MaxExp+"\n");
             
             Console.WriteLine("  무  기 : " + play.Wap);
             Console.WriteLine("  방어구 : " + play.Gab);
@@ -65,8 +68,14 @@ namespace TextRPG
                         string che2 = check2.KeyChar.ToString();
                         if (che2.ToUpper() == "Y")
                         {
-                            play.save();
-                            
+                            if (play.Id == "")
+                            {
+                                play.saveInsert();
+                            }
+                            else
+                            {
+                                play.saveUpdate();
+                            }
                         }
                         
                         break;

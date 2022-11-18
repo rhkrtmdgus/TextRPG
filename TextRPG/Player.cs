@@ -9,41 +9,45 @@ namespace TextRPG
 {
     public class Player
     {
-        private int lv;
-        private int at;
-        private int br;
-        private int gold;
-        private int exp;
-        private int maxExp;
-        private int hp;
-        private int mp;
-        private int dex;
+        private string id = "";
+        private string pw = "";
+        private int lv = 1;
+        private int at = 5;
+        private int br = 8;
+        private int hp = 200;
+        private int maxHp = 200;
+        private int mp = 10;
+        private int maxMp = 30;
+        private int exp = 0;
+        private int maxExp = 10;
+        private int dex = 1;
+        private int gold = 1000;
 
-        private string wap = "   없 음";
-        private string gab = "   없 음";
-        private string pet = "   없 음";
+        private string wap = "없 음";
+        private string gab = "없 음";
+        private string pet = "없 음";
+        private string job = "무 직";
 
-        private int wapAt;
-        private int gabBr;
+        private int wapAt = 0;
+        private int gabBr = 0;
 
-        public Player(int lv, int at, int br, int gold, int exp, int maxExp, int hp, int mp, int dex, string wap, string gab, string pet, 
-            int wapAt, int gabBr) {
-            this.lv = lv;
-            this.at = at;
-            this.br = br;
-            this.gold = gold;
-            this.exp = exp;
-            this.maxExp = maxExp;
-            this.hp = hp;
-            this.mp = mp;
-            this.dex = dex;
 
-            this.wap = wap;
-            this.gab = gab;
-            this.pet = pet;
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
 
-            this.wapAt = wapAt;
-            this.gabBr = gabBr;
+        public string Pw
+        {
+            get { return pw; }
+            set { pw = value; }
+
+        }
+        public string Job
+        {
+            get { return job; }
+            set { job = value; }
         }
 
 
@@ -150,7 +154,17 @@ namespace TextRPG
             set { gabBr = value; }
         }
 
-        
+        public int MaxHp
+        {
+            get { return maxHp; }
+            set { maxHp = value; }
+        }
+
+        public int MaxMp
+        {
+            get { return maxMp; }
+            set { maxMp = value; }
+        }
 
 
 
@@ -187,8 +201,9 @@ namespace TextRPG
             }
         }
 
-        public void save()
+        /*public void save()
         {
+
             string savePath = @"d:\save\test.txt";
             //무기 공격력 빼기 방어구도 추가예정
             this.at -= this.wapAt;
@@ -202,9 +217,42 @@ namespace TextRPG
             //무기 공격력 다시 증가
             this.at += this.wapAt;
             this.br += this.gabBr;
+        }*/
+
+        public void saveInsert()
+        {
+            
+                
+                back:
+                Console.Clear();
+                Console.WriteLine("\n아이디와 패스워드 정보가 없습니다.");
+
+                Console.Write("저장할 아이디 입력 : ");
+                this.Id = Console.ReadLine();
+                if(id.Length < 6 || id.Length > 10)
+                {
+                    Console.WriteLine("\n아이디는 6 ~ 10 자이내로 가능합니다. ");
+                    Thread.Sleep(2000);
+                    goto back;
+                }
+                Console.Write("비밀번호 : ");
+                this.Pw = Console.ReadLine();
+      
+            
+            login login = new login();
+            login.loading();
+            login.sabinsert(this);
+            
         }
 
-        public void LevelUp(int lv)
+        public void saveUpdate()
+        {
+            login login = new login();
+            login.loading();
+            login.sabUpdate(this);
+        }
+
+            public void LevelUp(int lv)
         {
             Random random = new Random();
             this.lv += 1;
@@ -216,15 +264,16 @@ namespace TextRPG
             int overExp = this.exp - this.maxExp;
             this.maxExp += 30 + (lv * 5);
             this.exp = overExp;
-            Console.WriteLine("레벨 업!!");
-
+            Console.WriteLine("★☆★☆★☆★☆\n" +
+                "레벨 업!!\n" +
+                "★☆★☆★☆★☆");
+            Thread.Sleep(2000);
         }
 
         public void WapSet(String wapName, int at)
         {
             this.Wap = wapName;
             this.WapAt = at;
-            this.at += at;
         }
 
         public void WapSet()
@@ -236,7 +285,6 @@ namespace TextRPG
         {
             this.Gab = name;  //미완성
             this.gabBr = br;
-            this.br += br;
         }
 
         public void GabSet()

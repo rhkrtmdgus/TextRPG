@@ -36,10 +36,8 @@ namespace TextRPG.bettle
                     {
                         Thread.Sleep(1000);
                     }
-                    catch (ThreadInterruptedException e)
+                    catch (ThreadInterruptedException)
                     {
-                        Console.WriteLine(e.Message);
-                        Console.Clear();
                         this.EndResult = this.EndAto;
                         this.status = 0;
                         this.threadStatus = 0;
@@ -142,6 +140,7 @@ namespace TextRPG.bettle
                 Console.Clear();
                 if(this.status == 0)
                 {
+                    
                     Console.WriteLine("\n\n잠시 후 마을로 귀환합니다. ");
                     Thread.Sleep(2000);
                     break;
@@ -159,7 +158,7 @@ namespace TextRPG.bettle
                 int result = random.Next(2);
                 if (result == 0)
                 {
-                    result = monster.br - play.At;
+                    result = monster.br - (play.At+play.WapAt);
                     result = result <= 0 ? -result : result;
                     monster.hp -= result;
                     Console.Clear();
@@ -180,7 +179,7 @@ namespace TextRPG.bettle
                 }
                 else
                 {
-                    result = play.Br - monster.at;
+                    result = (play.Br+play.GabBr) - monster.at;
                     result = result <= 0 ? -result : 1;
                     play.Hp -= result;
                     Console.Clear();
